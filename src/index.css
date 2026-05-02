@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Space+Mono&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #020203;
+  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  outline: none;
+  z-index: 1;
+}
+
+.interface {
+  position: relative;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.section {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-left: 10%;
+}
+
+.content {
+  pointer-events: auto;
+}
+
+.label {
+  font-family: 'Space Mono', monospace;
+  color: #ff4500;
+  font-size: 0.9rem;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+p {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 450px;
+  color: #b0b0b0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: #020203;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.preloader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: #ff4500;
+  margin-bottom: 20px;
+  animation: pulse 1.5s infinite alternate;
+}
+
+.progress-bar {
+  width: 250px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  height: 100%;
+  background: #ff4500;
+  transition: width 0.2s linear;
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+}
+
+@keyframes pulse {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 3rem; }
+  .section { padding-left: 5%; }
+}
+
+/* --- КАСТОМНИЙ КУРСОР --- */
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 69, 0, 0.5); /* Напівпрозорий помаранчевий */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%); /* Центруємо відносно миші */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Легке світіння */
+  box-shadow: 0 0 15px rgba(255, 69, 0, 0.2), inset 0 0 10px rgba(255, 69, 0, 0.2);
+}
+
+/* Крапка в центрі курсора */
+.custom-cursor::after {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: #ff4500;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ff4500;
+}
+
+/* --- ПІДКАЗКА СКРОЛУ --- */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 10%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  opacity: 0; /* Спочатку приховано */
+  pointer-events: none;
+}
+
+.scroll-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #b0b0b0;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Анімована крапля, що біжить по лінії */
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #ff4500;
+  animation: scrollDrop 1.5s infinite linear;
+}
+
+@keyframes scrollDrop {
+  0% { top: -20px; }
+  100% { top: 40px; }
+}
